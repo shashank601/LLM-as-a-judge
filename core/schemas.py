@@ -67,7 +67,7 @@ class Verdict(BaseModel):
     overall_score: float | None = None
 
     # Explanation of the overall judgment.
-    overall_rationale: str | None
+    overall_rationale: str | None = None
 
     # Only populated during pairwise evaluation.
     winner: Optional[Literal["A", "B", "tie"]] = None
