@@ -64,10 +64,10 @@ class Verdict(BaseModel):
     criteria: list[CriterionScore]
 
     # Calculated by our code from the criterion scores.
-    overall_score: float
+    overall_score: float | None = None
 
     # Explanation of the overall judgment.
-    overall_rationale: str
+    overall_rationale: str | None
 
     # Only populated during pairwise evaluation.
     winner: Optional[Literal["A", "B", "tie"]] = None
