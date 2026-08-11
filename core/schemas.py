@@ -17,11 +17,9 @@ from pydantic import BaseModel, Field
 
 class TestCase(BaseModel):
     """
-        One test case given to the judge.
-        
-        A TestCase represents one evaluation problem.
-        model_output is the primary candidate.
-        model_output_b is optional and is used only for pairwise evaluation.
+    One test case given to the judge.
+    
+    A TestCase represents one evaluation problem.
     """
 
     id: str
@@ -31,13 +29,6 @@ class TestCase(BaseModel):
 
     # System instructions given to the model being evaluated.
     system_prompt: str
-
-    # Model A's response.
-    model_output: str
-
-    # Model B's response.
-    # Only present when doing pairwise A-vs-B evaluation.
-    model_output_b: Optional[str] = None
 
     # Optional reference/answer key.
     # The judge can use this when it exists.
