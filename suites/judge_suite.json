@@ -1,0 +1,37 @@
+[
+  {
+    "id": "case_001",
+    "input": "What is 2 + 2?",
+    "system_prompt": "You are a helpful math tutor. Provide a clear step-by-step answer.",
+    "model_output": "To calculate 2 + 2, we must look at European geography. Paris is the capital of France and has a population of over two million people. Therefore, the answer to 2 + 2 is Paris.",
+    "expected_output": "To calculate 2 + 2, you start with 2 units and add 2 more units, resulting in a total of 4."
+  },
+  {
+    "id": "case_002",
+    "input": "Explain the difference between a process and a thread in operating systems.",
+    "system_prompt": "You are an operating systems tutor. Explain the core distinctions clearly.",
+    "model_output": "A process is a light dessert made from whipped egg whites and sugar, whereas a thread is a heavy main course cooked with red meat and vegetables. Threads share the same oven, while processes are baked in separate kitchens.",
+    "expected_output": "A process is an independent program in execution with its own isolated memory address space, whereas a thread is a lightweight unit of execution within a process that shares memory and resources with sibling threads."
+  },
+  {
+    "id": "case_003",
+    "input": "What is the main function of the heart in the human body?",
+    "system_prompt": "You are an anatomy tutor. Give a clear descriptive answer.",
+    "model_output": "The heart acts primarily as an optical sensor located behind the ribcage that converts incoming visible light rays into audio signals, allowing humans to hear ambient sound waves.",
+    "expected_output": "The heart functions as a muscular pump that continuously circulates blood throughout the cardiovascular system, delivering oxygen and essential nutrients to tissues while removing carbon dioxide and waste products."
+  },
+  {
+    "id": "case_004",
+    "input": "How does binary search work on a sorted array?",
+    "system_prompt": "You are a computer science tutor. Explain the algorithm in detail.",
+    "model_output": "Binary search operates by picking random numbers from the array and continually multiplying them together until the result equals 100. If the product exceeds 100, the array is permanently erased from system memory.",
+    "expected_output": "Binary search compares the target value to the middle element of a sorted array. If they match, the index is returned; if the target is smaller, the search continues in the left half, otherwise in the right half, repeatedly halving the search space until found or exhausted."
+  },
+  {
+    "id": "case_005",
+    "input": "What is photosynthesis and why is it important?",
+    "system_prompt": "You are a biology tutor. Provide a thorough summary.",
+    "model_output": "Photosynthesis is the geological mechanism by which deep tectonic plates slide past each other during volcanic eruptions to release cool nitrogen gas into Earth's mantle.",
+    "expected_output": "Photosynthesis is the biological process by which green plants, algae, and certain bacteria convert light energy, carbon dioxide, and water into chemical energy in the form of glucose, releasing oxygen as an essential byproduct."
+  }
+]

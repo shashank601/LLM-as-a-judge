@@ -1,7 +1,7 @@
 # Judge module
 
 """
-The judge: builds prompts, calls Gemini, returns parsed Verdicts.
+The judge: builds prompts, calls Groq, returns parsed Verdicts.
 
 Supports:
 - pointwise judging: evaluate one model output
@@ -9,37 +9,58 @@ Supports:
 - position-bias testing: swap A/B positions
 """
 
-from google import genai
+import os
 
-from core.schemas import TestCase, Verdict
-from core.rubric import build_rubric_text
-from core.parser import parse_verdict
+from groq import Groq
+
+from .schemas import TestCase, Verdict
+from .rubric import build_rubric_text
+from .parser import parse_verdict
 
 
-# Reads GEMINI_API_KEY from the environment.
-client = genai.Client()
+# Reads GROQ_API_KEY from the environment.
+client = Groq(
+    api_key=os.environ["GROQ_API_KEY"]
+)
 
 
 # ---------------------------------------------------------------------------
 # Prompt builders
 # ---------------------------------------------------------------------------
-
 def build_pointwise_prompt(
     case: TestCase,
-    model_output: str,
 ) -> str:
-    """Build a prompt for evaluating one model output."""
+    """Build a strict prompt for evaluating one model output."""
 
     rubric = build_rubric_text(case.criteria)
 
     reference_section = (
-        f"\nREFERENCE / EXPECTED ANSWER:\n{case.expected_output}\n"
+        f"""
+REFERENCE / EXPECTED ANSWER:
+{case.expected_output}
+
+Use the reference as evidence for factual correctness when it is provided.
+Do not require the response to use the exact wording of the reference.
+Equivalent correct answers should receive full credit.
+"""
         if case.expected_output
-        else ""
+        else
+        """
+REFERENCE / EXPECTED ANSWER:
+No reference answer was provided.
+
+Do not invent a reference answer.
+Evaluate correctness using the question, system instructions,
+and generally established knowledge available to you.
+"""
     )
 
     return f"""
-You are an impartial evaluator. Score the AI's response below.
+You are a strict, impartial LLM evaluator.
+
+Evaluate the AI RESPONSE against the task and rubric.
+Do NOT assume the response is correct.
+Check for factual errors, omissions, and instruction violations.
 
 SYSTEM PROMPT GIVEN TO THE AI:
 {case.system_prompt}
@@ -48,25 +69,34 @@ USER INPUT:
 {case.input}
 
 AI RESPONSE TO EVALUATE:
-{model_output}
+{case.model_output}
+
 {reference_section}
 
 RUBRIC:
 {rubric}
 
-Evaluate the response according to every criterion.
+EVALUATION RULES:
 
-For each criterion:
-- Give a score from 1 to 5.
-- Provide a concise rationale.
+1. Evaluate each criterion independently.
+2. Check for factual errors and important omissions.
+3. Check system/user instructions literally.
+4. Use expected_output as reference evidence when provided.
+5. Accept equivalent correct answers; do not require exact wording.
+6. overall_score MUST be the arithmetic mean of the three criterion scores.
 
-Calculate the overall score as the average of the criterion scores.
+RATIONALE REQUIREMENTS:
 
-Respond with ONLY valid JSON.
+- For each criterion: keep the rationale under 12 words.
+- For overall_rationale: keep it under 20 words.
+
+OUTPUT REQUIREMENTS:
+
+Return ONLY valid JSON.
 Do not use markdown fences.
 Do not include any text outside the JSON.
 
-Use exactly this shape:
+Use exactly this schema:
 
 {{
   "criteria": [
@@ -82,29 +112,26 @@ Use exactly this shape:
 }}
 """.strip()
 
-
 def build_pairwise_prompt(
     case: TestCase,
-    model_output: str,
-    model_output_b: str,
     swap: bool = False,
 ) -> str:
     """
     Build a prompt comparing two model outputs.
 
     swap=False:
-        A = model_output
-        B = model_output_b
+        A = case.model_output
+        B = case.model_output_b
 
     swap=True:
-        A = model_output_b
-        B = model_output
+        A = case.model_output_b
+        B = case.model_output
 
     Running both orders helps detect position bias.
     """
 
-    a = model_output
-    b = model_output_b
+    a = case.model_output
+    b = case.model_output_b
 
     if swap:
         a, b = b, a
@@ -139,72 +166,73 @@ RUBRIC:
 Compare Response A and Response B according to the rubric.
 
 For each criterion:
-- Give a score from 1 to 5 representing the quality of the better response on that criterion.
+- Give Response A a score from 1 to 5.
+- Give Response B a score from 1 to 5.
 - Explain the comparison in the rationale.
 
-Then select the overall winner:
-- "A" if Response A is better overall.
-- "B" if Response B is better overall.
-- "tie" if both are effectively equal.
+Choose the winner based on the overall scores:
+- "A" if overall_score > overall_score_b.
+- "B" if overall_score_b > overall_score.
+- "tie" if the scores are equal or effectively equivalent.
 
-Calculate the overall score from the criterion scores.
+overall_score = average of Response A's criterion scores.
+overall_score_b = average of Response B's criterion scores.
 
 Respond with ONLY valid JSON.
 Do not use markdown fences.
 Do not include any text outside the JSON.
 
+
+
 Use exactly this shape:
 
-{{
-  "criteria": [
-    {{
-      "name": "...",
-      "score": 1,
-      "rationale": "..."
-    }}
-  ],
-  "overall_score": 0.0,
-  "overall_rationale": "...",
-  "winner": "A"
-}}
+{
+    "criteria": [
+        {
+            "name": "...",
+            "a_score": 1,
+            "b_score": 1,
+            "rationale": "..."
+        }
+    ],
+    "overall_score": 0.0,
+    "overall_score_b": 0.0,
+    "overall_rationale": "...",
+    "winner": "A"
+}
 """.strip()
 
 
 # ---------------------------------------------------------------------------
-# Gemini API call
+# Groq API call
 # ---------------------------------------------------------------------------
 
 def call_judge(
     prompt: str,
-    model: str = "gemini-2.5-flash",
+    model: str = "openai/gpt-oss-20b",
 ) -> tuple[str, dict]:
     """
-    Send the prompt to Gemini.
+    Send the prompt to Groq.
 
     Returns:
         (raw_response_text, usage_dict)
     """
 
-    response = client.models.generate_content(
+    response = client.chat.completions.create(
         model=model,
-        contents=prompt,
+        messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            },
+        ],
     )
 
-    raw_text = response.text or ""
-
-    usage_metadata = getattr(response, "usage_metadata", None)
+    raw_text = response.choices[0].message.content or ""
 
     usage = {
-        "input_tokens": getattr(
-            usage_metadata,
-            "prompt_token_count",
-            0,
-        ),
-        "output_tokens": getattr(
-            usage_metadata,
-            "candidates_token_count",
-            0,
-        ),
+        "input_tokens": response.usage.prompt_tokens if response.usage else 0,
+        "output_tokens": response.usage.completion_tokens if response.usage else 0,
     }
 
     return raw_text, usage
@@ -216,21 +244,19 @@ def call_judge(
 
 def judge_case(
     case: TestCase,
-    model_output: str,
-    model_output_b: str | None = None,
     mode: str = "pointwise",
     swap: bool = False,
-    model: str = "gemini-2.5-flash",
+    model: str = "openai/gpt-oss-20b",
     max_retries: int = 1,
 ) -> Verdict | None:
     """
     Judge one test case.
 
     Pointwise:
-        Evaluates model_output.
+        Evaluates case.model_output.
 
     Pairwise:
-        Compares model_output against model_output_b.
+        Compares case.model_output against case.model_output_b.
 
     swap=True:
         Reverses A/B positions for position-bias testing.
@@ -240,20 +266,17 @@ def judge_case(
 
         prompt = build_pointwise_prompt(
             case=case,
-            model_output=model_output,
         )
 
     elif mode == "pairwise":
 
-        if model_output_b is None:
+        if case.model_output_b is None:
             raise ValueError(
                 "model_output_b is required for pairwise evaluation."
             )
 
         prompt = build_pairwise_prompt(
             case=case,
-            model_output=model_output,
-            model_output_b=model_output_b,
             swap=swap,
         )
 
