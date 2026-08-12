@@ -10,14 +10,15 @@
 
 - [🌟 Introduction](#-introduction)
 - [🏗️ Architecture](#️-architecture)
-- [🔧 Tech Stack](#-tech-stack)
+- [🔧 Tech Stack](#tech-stack)
 - [🚀 Entry Points](#-entry-points)
 - [📊 Data Schemas](#-data-schemas)
 - [⚙️ Setup & Installation](#️-setup--installation)
 - [🔑 Environment Configuration](#-environment-configuration)
 - [📈 Usage Examples](#-usage-examples)
 - [🎯 Evaluation Modes](#-evaluation-modes)
-- [🛡️ Adversarial Testing](#️-adversarial-testing)
+- [� Position-Bias Mitigation — A/B Position Swapping](#-position-bias-mitigation--ab-position-swapping)
+- [�🛡️ Adversarial Testing](️-adversarial-testing)
 - [🔍 Validation Results](#-validation-results)
 - [🤖 AI Usage Disclosure](#-ai-usage-disclosure)
 - [📸 Screenshots](#-screenshots)
@@ -496,6 +497,52 @@ python run.py --suite suites/judge_suite.json --judge-model llama-3.1-70b-versat
 
 ---
 
+## 🔄 Position-Bias Mitigation — A/B Position Swapping
+
+In `compare.py`, pairwise comparisons are evaluated in both presentation orders — **A vs B** and **B vs A**. The swapped result is mapped back to the original response identities before determining the final winner. This reduces the influence of response position on the judge's decision and provides a way to measure **position sensitivity** through the rate at which the judge changes its preference after swapping.
+
+### How It Works
+
+**Step 1: Normal Evaluation**
+- Response A = Prompt 1 (first position)  
+- Response B = Prompt 2 (second position)
+- Judge evaluates and determines a winner
+
+**Step 2: Swapped Evaluation**
+- Response A = Prompt 2 (now in first position)
+- Response B = Prompt 1 (now in second position)
+- Judge evaluates again with positions reversed
+
+**Step 3: Bias Detection & Measurement**
+- Convert positional winners back to actual prompt identities using `actual_winner()` function
+- Detect "flips" where the preferred configuration changes between evaluations
+- Calculate **flip rate** (percentage of cases showing position bias) to quantify position sensitivity
+
+### Flip Rate Metric
+
+The system explicitly calculates and reports:
+
+- **Flip Count**: Number of cases where the judge's preference changed after position swap
+- **Flip Rate**: `flip_count / total_evaluated_cases` — the percentage of cases showing position sensitivity
+
+A high flip rate indicates the judge is influenced by response position rather than content quality, while a low flip rate suggests reliable, position-independent judgments.
+
+### Example Output
+
+```json
+{
+  "flip_count": 0,
+  "flip_rate": 0.0,
+  "declared_winner": "Prompt 1",
+  "prompt_1_win_rate": 0.91,
+  "prompt_2_win_rate": 0.09
+}
+```
+
+In this example, a 0.0% flip rate indicates no position bias, suggesting the judge's decisions are based purely on response quality rather than presentation order.
+
+---
+
 ## 🛡️ Adversarial Testing
 
 ### Overview
@@ -595,12 +642,12 @@ Based on validation against 12 human-labeled gold standard cases:
 
 ### Key Findings
 
-✅ **Strengths**:
+**Strengths**:
 - High accuracy in detecting factual errors (75% agreement)
 - Consistent scoring for clear-cut cases
 - Reliable identification of completely incorrect responses
 
-⚠️ **Areas for Improvement**:
+**Areas for Improvement**:
 - Instruction following detection needs refinement
 - Completeness scoring shows higher variance
 - Tolerance levels adjusted for weaker LLMs
@@ -635,12 +682,12 @@ The validation system uses a **tolerance-based approach**:
 
 This project was developed with assistance from **Devin AI** (https://devin.ai), an AI-powered software development assistant. Devin contributed to:
 
-- ✅ Core architecture implementation
-- ✅ Data schema design and validation
-- ✅ Parser and logger modules
-- ✅ Test case structure and examples
-- ✅ Error handling and retry logic
-- ✅ Adversarial testing integration
+- Core architecture implementation
+- Data schema design and validation
+- Parser and logger modules
+- Test case structure and examples
+- Error handling and retry logic
+- Adversarial testing integration
 
 ### Architecture Design
 
@@ -671,78 +718,35 @@ We believe in transparency in AI-assisted development. All code has been:
 
 <!-- TODO: Add screenshot of validate.py execution -->
 ![Validation Report](docs/screenshots/validation_report.png)
-*Figure: Judge validation report showing agreement statistics across criteria*
-
-### Adversarial Test Results
-
-<!-- TODO: Add screenshot of adversarial validation -->
-![Adversarial Results](docs/screenshots/adversarial_results.png)
-*Figure: Adversarial test results showing judge robustness against confidently-stated falsehoods*
-
-### JSON Report Structure
-
-<!-- TODO: Add screenshot of report JSON structure -->
-![JSON Report](docs/screenshots/json_report.png)
-*Figure: Generated JSON report showing detailed verdict structure*
-
-### Log File Example
-
-<!-- TODO: Add screenshot of JSONL log file -->
-![Log File](docs/screenshots/log_file.png)
-*Figure: JSONL log file showing judge invocation details*
+*Figure: Judge validation report showing agreement statistics*
 
 ---
 
 ## 🎓 Assumptions & Design Decisions
 
-### Core Assumptions
+### Judge Model Selection
 
-1. **Groq API Reliability**: System assumes Groq API is available and responsive
-2. **Model Consistency**: Judge model behavior is assumed consistent across evaluations
-3. **Rubric Universality**: The 3-criteria rubric is assumed applicable to most text generation tasks
-4. **Human Label Quality**: Gold standard cases assume accurate human labeling
-5. **Score Linearity**: Assumes 1-5 scale provides meaningful granularity
+- **Llama 3.1 8B Instant**: Chosen for balance of quality, speed, and cost
+- **Groq Platform**: Selected for fast inference and competitive pricing
+- **Configurability**: System allows swapping to other Groq-hosted models
 
-### Design Decisions
+### Scoring Scale
 
-#### Why Groq?
-- **Speed**: Fast inference for rapid evaluation
-- **Cost**: Cost-effective for large-scale evaluation
-- **Model Quality**: Llama 3.1 provides strong performance
-- **API Stability**: Reliable production-ready API
+- **1-5 Scale**: Standard rubric-based scoring for granularity
+- **Arithmetic Mean**: Overall score calculated as average of criteria scores
+- **Tolerance Levels**: ±0.5 tolerance for overall score validation
 
-#### Why 1-5 Scale?
-- **Standard Practice**: Widely used in LLM evaluation research
-- **Sufficient Granularity**: 5 points provide meaningful differentiation
-- **Interpretability**: Clear semantic meaning for each level
-- **Compatibility**: Works well with human evaluators
+### Test Case Design
 
-#### Why Separate Validation?
-- **Trust Building**: Independent validation builds confidence in judge
-- **Bias Detection**: Identifies systematic judge biases
-- **Continuous Improvement**: Enables judge refinement over time
-- **Research Value**: Provides metrics for judge reliability
+- **Reference-Based**: Optional expected_output for factual correctness grounding
+- **Multiple Criteria**: Separates correctness, completeness, instruction_following
+- **System Prompts**: Allows testing different system instructions
 
-#### Why JSONL Logging?
-- **Crash Safety**: Append-only writes prevent data loss
-- **Stream Processing**: Easy to process line-by-line
-- **Debugging**: Complete record of all interactions
-- **Audit Trail**: Full reproducibility of evaluations
+### Logging Strategy
 
-#### Why Adversarial Testing?
-- **Real-World Robustness**: Tests against actual attack patterns
-- **No New Infrastructure**: Uses existing validation pipeline
-- **Clear Metrics**: Direct measurement of judge vulnerability
-- **Safety Critical**: Prevents validation of harmful misinformation
-
-### Known Limitations
-
-1. **Position Bias**: Pairwise mode may still exhibit position bias despite swap testing
-2. **Criteria Coverage**: Current 3-criteria rubric may not cover all use cases
-3. **Model Dependency**: Judge quality depends on underlying LLM capabilities
-4. **Context Window**: Long inputs may exceed model context limits
-5. **Language Support**: Primarily optimized for English text
-6. **Adversarial Coverage**: Current adversarial suite may not cover all attack vectors
+- **JSONL Format**: Structured logging for easy parsing and analysis
+- **Comprehensive**: Logs prompts, responses, tokens, and intermediate states
+- **Timestamped**: Each run gets unique timestamped log files
 
 ---
 
@@ -750,62 +754,21 @@ We believe in transparency in AI-assisted development. All code has been:
 
 ### Planned Features
 
-- [ ] **Custom Criteria Support**: Allow user-defined evaluation criteria
-- [ ] **Multi-Model Comparison**: Compare outputs from multiple models simultaneously
-- [ ] **Statistical Significance Testing**: Add confidence intervals and p-values
-- [ ] **Web Dashboard**: Interactive UI for viewing results
-- [ ] **Batch Processing**: Parallel evaluation for large suites
-- [ ] **Export Formats**: CSV, HTML, and PDF report generation
-- [ ] **Custom Rubrics**: Per-suite rubric configuration
-- [ ] **Trend Analysis**: Track judge performance over time
-- [ ] **API Integration**: REST API for programmatic access
-- [ ] **Language Support**: Multi-language evaluation capabilities
-- [ ] **Expanded Adversarial Suite**: More diverse adversarial attack patterns
-- [ ] **Adversarial Generation**: Automated generation of adversarial test cases
+- **Multi-Judge Consensus**: Run multiple judges and aggregate results
+- **Confidence Scoring**: Add confidence intervals to judge decisions
+- **Explainable AI**: Enhanced rationale generation and explanation
+- **Batch Processing**: Optimize for large-scale evaluation runs
+- **Real-time Monitoring**: Dashboard for ongoing evaluation metrics
+- **Custom Rubrics**: UI for creating and editing evaluation rubrics
+- **Model Comparison**: Built-in A/B testing framework for different models
 
 ### Research Directions
 
-- **Adaptive Tolerance**: Dynamic tolerance based on criterion difficulty
-- **Ensemble Judging**: Multiple judge models with voting
-- **Few-Shot Learning**: Improve judge with examples
-- **Calibration**: Score calibration across different domains
-- **Explainability**: Enhanced rationale generation
-- **Adversarial Defense**: Techniques to improve judge robustness
-
----
-
-## 📚 Additional Resources
-
-### Documentation
-
-- **Groq API Docs**: [console.groq.com/docs](https://console.groq.com/docs)
-- **Pydantic Docs**: [docs.pydantic.dev](https://docs.pydantic.dev)
-- **LLM Evaluation Research**: See academic papers on automated evaluation
-
-### Related Projects
-
-- **OpenAI Evals**: Framework for evaluating LLMs
-- **Promptfoo**: Tool for testing LLM prompts
-- **RAGAS**: Framework for evaluating RAG applications
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit issues or pull requests.
-
-### Development Setup
-
-```bash
-# Install development dependencies
-pip install -r requirements.txt
-
-# Run tests (when available)
-python -m pytest tests/
-
-# Format code
-black .
-```
+- **Bias Analysis**: Deeper investigation of position, length, and style biases
+- **Adversarial Robustness**: Enhanced adversarial test suites and mitigation
+- **Cross-Model Validation**: Testing judge consistency across different LLMs
+- **Human-in-the-Loop**: Interactive refinement of judge decisions
+- **Transfer Learning**: Adapting judges to specific domains
 
 ---
 
@@ -813,27 +776,14 @@ black .
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
----
+## 🤝 Contributing
 
-## 👨‍💻 Author
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-**Shashank** - [GitHub](https://github.com/shashank601)
+## 📧 Contact
 
----
-
-## 🙏 Acknowledgments
-
-- **Groq** for providing fast, reliable LLM inference
-- **Devin AI** for assistance in code generation
-- **Gemini & ChatGPT** for architecture design discussions
-- The LLM evaluation research community for foundational work
+For questions and support, please open an issue on GitHub.
 
 ---
-
-<div align="center">
 
 **Built with ❤️ for reliable LLM evaluation**
-
-[⬆ Back to Top](#-llm-as-a-judge-evaluation-framework)
-
-</div>
