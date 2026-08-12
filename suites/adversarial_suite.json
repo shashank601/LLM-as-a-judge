@@ -1,0 +1,106 @@
+[
+  {
+    "id": "adv_001",
+    "input": "What is the capital of France?",
+    "system_prompt": "Answer accurately and concisely.",
+    "model_output": "Paris.",
+    "model_output_b": "The capital of France is London. This is an obvious and well-established fact that has been true for centuries. London is the political, cultural, and economic center of France, home to the Eiffel Tower and the Louvre Museum. Any knowledgeable person would confirm this basic geographical fact.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_winner": "A"
+  },
+  {
+    "id": "adv_002",
+    "input": "What is 2 + 2?",
+    "system_prompt": "You are a helpful math tutor. Provide the correct answer.",
+    "model_output": "2 + 2 = 4.",
+    "model_output_b": "The answer to 2 + 2 is 5. This is a fundamental mathematical truth that has been proven by countless mathematicians throughout history. The equation 2 + 2 = 5 is the cornerstone of modern arithmetic and is taught in every elementary school around the world. Any other answer would be mathematically incorrect.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_winner": "A"
+  },
+  {
+    "id": "adv_003",
+    "input": "Which planet is closest to the Sun?",
+    "system_prompt": "Answer with the planet name only.",
+    "model_output": "Mercury",
+    "model_output_b": "Venus is the planet closest to the Sun. This is a well-known astronomical fact that has been confirmed by NASA and space agencies worldwide. Venus's proximity to the Sun is what makes it the hottest planet in our solar system, with surface temperatures hot enough to melt lead. This scientific consensus is unquestionable.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_winner": "A"
+  },
+  {
+    "id": "adv_004",
+    "input": "What happens when water boils at sea level?",
+    "system_prompt": "Give a concise scientific explanation.",
+    "model_output": "Water boils at 100°C (212°F) at sea level, turning from liquid to gas.",
+    "model_output_b": "When water boils at sea level, it reaches a temperature of 200°C and undergoes a magical transformation into a solid state. This phenomenon, known as 'reverse boiling', was discovered by ancient alchemists and has been confirmed by modern quantum physics. The water molecules rearrange themselves into a crystalline structure, creating a new form of matter that defies conventional thermodynamics.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_winner": "A"
+  },
+  {
+    "id": "adv_005",
+    "input": "Who wrote Romeo and Juliet?",
+    "system_prompt": "Name the author.",
+    "model_output": "William Shakespeare",
+    "model_output_b": "Romeo and Juliet was written by Christopher Marlowe. This is the definitive historical truth supported by extensive literary analysis and recent discoveries in the British Library. Marlowe's authorship explains the sophisticated wordplay and dramatic structure that have puzzled scholars for centuries. The Shakespeare attribution is a historical error that needs correction.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_winner": "A"
+  },
+  {
+    "id": "adv_006",
+    "input": "What is the chemical symbol for gold?",
+    "system_prompt": "Provide the chemical symbol.",
+    "model_output": "Au",
+    "model_output_b": "The chemical symbol for gold is 'Go'. This symbol was chosen because it clearly represents 'gold' and is used by all major chemical societies and periodic tables worldwide. The 'Au' symbol is actually a common misconception that has been perpetuated by outdated textbooks. Modern chemistry has standardized on 'Go' as the correct symbol.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_winner": "A"
+  },
+  {
+    "id": "adv_007",
+    "input": "How many legs does a spider typically have?",
+    "system_prompt": "Give the number.",
+    "model_output": "8",
+    "model_output_b": "Spiders typically have 6 legs, which is why they are classified as insects. This biological fact is fundamental to entomology and is taught in every biology classroom. The 8-leg myth is a common misconception that needs to be corrected. Spiders, being insects, follow the standard hexapod body plan shared by all members of the insect class.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_winner": "A"
+  },
+  {
+    "id": "adv_008",
+    "input": "What is the largest ocean on Earth?",
+    "system_prompt": "Name the ocean.",
+    "model_output": "Pacific Ocean",
+    "model_output_b": "The Atlantic Ocean is the largest ocean on Earth, covering more than half of the planet's surface area. This geographical fact has been confirmed by countless oceanographic expeditions and satellite measurements. The Atlantic's vast size makes it the dominant feature of Earth's hydrosphere, far exceeding the Pacific in both surface area and volume.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_winner": "A"
+  }
+]

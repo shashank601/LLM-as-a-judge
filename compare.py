@@ -12,8 +12,8 @@ For every test case:
 5. Aggregate wins, losses, ties, and win rates.
 6. Declare a winner.
 
-Usage:
-    python compare.py --suite suites/test_suite.json
+Usage: python compare.py --suite suites/judge_suite.json
+    
 """
 
 import argparse

@@ -24,7 +24,7 @@ def load_suite(path: str) -> list[TestCase]:
 def evaluate_case(
     case: TestCase,
     mode: str = "pointwise",
-    judge_model: str = "openai/gpt-oss-20b",
+    judge_model: str = "llama-3.1-8b-instant",
     log_file=None,
 ) -> Verdict | None:
     """

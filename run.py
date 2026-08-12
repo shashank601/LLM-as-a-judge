@@ -2,7 +2,7 @@
 Pointwise evaluation entry point.
 
 Usage:
-    python run.py --suite suites/test_suite.json
+    python run.py --suite suites/judge_suite.json
 """
 
 import argparse
@@ -22,13 +22,13 @@ def main():
 
     parser.add_argument(
         "--suite",
-        default="suites/test_suite.json",
+        default="suites/judge_suite.json",
         help="Path to the test suite JSON file.",
     )
 
     parser.add_argument(
         "--judge-model",
-        default="openai/gpt-oss-20b",
+        default="llama-3.1-8b-instant",
         help="Model used as the judge.",
     )
 
@@ -89,10 +89,20 @@ def main():
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)
 
-    print(f"Report saved to {report_path}")
-    print(f"Run log saved to {log_file}")
+    print("\nEvaluation Results")
+    print("=" * 50)
     print(f"Total cases: {len(test_cases)}")
     print(f"Evaluated: {len(verdicts)}")
+    print(f"Failed: {len(test_cases) - len(verdicts)}")
+
+    print("\nCriteria Scores:")
+    for criterion, score in report["criteria_scores"].items():
+        print(f"  {criterion}: {score:.2f}")
+
+    print(f"\nOverall Score: {report['overall_score']:.2f}")
+
+    print(f"\nReport saved to {report_path}")
+    print(f"Run log saved to {log_file}")
 
 
 if __name__ == "__main__":

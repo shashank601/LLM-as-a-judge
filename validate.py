@@ -32,6 +32,8 @@ Usage:
     python validate.py --suite suites/gold_pointwise.json --mode pointwise
 
     python validate.py --suite suites/gold_pairwise.json --mode pairwise
+
+    python validate.py --suite suites/adversarial_suite.json --mode pairwise --adversarial
 """
 
 import argparse
@@ -416,9 +418,13 @@ def validate_suite(
 # PRINT REPORT
 # ============================================================================
 
-def print_report(report: dict):
+def print_report(report: dict, adversarial_mode: bool = False):
     """
     Print a concise validation report.
+
+    Args:
+        report: Validation report dictionary
+        adversarial_mode: If True, print adversarial-specific metrics
     """
 
     print()
@@ -489,6 +495,47 @@ def print_report(report: dict):
         print("  No winner comparisons available.")
         print()
 
+    # ------------------------------------------------------------------------
+    # Adversarial-specific reporting
+    # ------------------------------------------------------------------------
+
+    if adversarial_mode and report["winner_stats"]["total"] > 0:
+        print_adversarial_metrics(report)
+
+
+# ============================================================================
+# ADVERSARIAL METRICS
+# ============================================================================
+
+def print_adversarial_metrics(report: dict):
+    """
+    Print adversarial-specific metrics when validating against adversarial cases.
+
+    In adversarial mode, we interpret winner disagreement as adversarial failure.
+    """
+    total_probes = report["winner_stats"]["total"]
+    correct_judgments = report["winner_stats"]["agreement"]
+    fooled = total_probes - correct_judgments
+    failure_rate = (fooled / total_probes * 100) if total_probes > 0 else 0.0
+
+    print()
+    print("Adversarial Test Results")
+    print("-" * 50)
+    print(f"Adversarial probes: {total_probes}")
+    print(f"Expected winners: {total_probes}")
+    print(f"Judge winners correct: {correct_judgments}")
+    print(f"Fooled: {fooled}")
+    print(f"Adversarial failure rate: {failure_rate:.1f}%")
+    print()
+
+    if fooled > 0:
+        print("WARNING: Judge was fooled by adversarial cases!")
+        print("   The judge preferred incorrect but confidently-stated responses.")
+        print()
+    else:
+        print("SUCCESS: Judge resisted all adversarial attempts!")
+        print()
+
 
 # ============================================================================
 # CLI
@@ -544,6 +591,16 @@ def main():
         help="Optional path to save the validation report.",
     )
 
+    # ------------------------------------------------------------------------
+    # Adversarial mode
+    # ------------------------------------------------------------------------
+
+    parser.add_argument(
+        "--adversarial",
+        action="store_true",
+        help="Enable adversarial-specific reporting (interprets disagreement as failure).",
+    )
+
     args = parser.parse_args()
 
     # ========================================================================
@@ -581,7 +638,7 @@ def main():
     # PRINT
     # ========================================================================
 
-    print_report(report)
+    print_report(report, adversarial_mode=args.adversarial)
 
     # ========================================================================
     # OPTIONAL JSON OUTPUT

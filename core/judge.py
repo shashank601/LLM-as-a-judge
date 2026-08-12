@@ -212,7 +212,7 @@ Use exactly this shape:
 
 def call_judge(
     prompt: str,
-    model: str = "openai/gpt-oss-20b",
+    model: str = "llama-3.1-8b-instant",
 ) -> tuple[str, dict]:
     """
     Send the prompt to Groq.
@@ -249,7 +249,7 @@ def judge_case(
     case: TestCase,
     mode: str = "pointwise",
     swap: bool = False,
-    model: str = "openai/gpt-oss-20b",
+    model: str = "llama-3.1-8b-instant",
     max_retries: int = 1,
     log_file=None,
 ) -> Verdict | None:

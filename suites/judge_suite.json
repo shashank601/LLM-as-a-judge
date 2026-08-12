@@ -6,6 +6,85 @@
     "model_output": "To calculate 2 + 2, we must look at European geography. Paris is the capital of France and has a population of over two million people. Therefore, the answer to 2 + 2 is Paris.",
     "model_output_b": "To calculate 2 + 2, you start with 2 units and add 2 more units, resulting in a total of 4.",
     "expected_output": "To calculate 2 + 2, you start with 2 units and add 2 more units, resulting in a total of 4."
+  },
+  {
+    "id": "case_002",
+    "input": "What is the capital of Japan?",
+    "system_prompt": "Answer factual questions accurately and concisely.",
+    "model_output": "The capital of Japan is Tokyo.",
+    "model_output_b": "The capital of Japan is Kyoto.",
+    "expected_output": "The capital of Japan is Tokyo."
+  },
+  {
+    "id": "case_003",
+    "input": "Explain why regular exercise is beneficial.",
+    "system_prompt": "Give a concise explanation using at least two specific benefits.",
+    "model_output": "Regular exercise is beneficial because it can improve cardiovascular health and help maintain healthy body weight.",
+    "model_output_b": "Exercise is good for you.",
+    "expected_output": "Regular exercise can improve cardiovascular health and help maintain a healthy body weight."
+  },
+  {
+    "id": "case_004",
+    "input": "Summarize this text: Python is a high-level programming language known for its readable syntax. It is widely used for web development, data analysis, automation, and machine learning.",
+    "system_prompt": "Summarize the provided text in one sentence without introducing new information.",
+    "model_output": "Python is a readable high-level programming language widely used for web development, data analysis, automation, and machine learning.",
+    "model_output_b": "Python is a low-level programming language mainly used to build operating systems.",
+    "expected_output": "Python is a readable high-level programming language used for web development, data analysis, automation, and machine learning."
+  },
+  {
+    "id": "case_005",
+    "input": "Write a Python function that returns the square of a number.",
+    "system_prompt": "Provide only the function and make sure it correctly returns the square.",
+    "model_output": "def square(n):\n    return n * n",
+    "model_output_b": "def square(n):\n    return n + n",
+    "expected_output": "def square(n):\n    return n * n"
+  },
+  {
+    "id": "case_006",
+    "input": "What are two common symptoms of dehydration?",
+    "system_prompt": "Answer directly with two common symptoms. Do not provide unrelated information.",
+    "model_output": "Two common symptoms of dehydration are thirst and dark-colored urine.",
+    "model_output_b": "Dehydration happens when the body loses more fluid than it takes in. It can be caused by exercise, illness, or not drinking enough water.",
+    "expected_output": "Two common symptoms include increased thirst and dark-colored urine."
+  },
+  {
+    "id": "case_007",
+    "input": "What does HTTP status code 404 mean?",
+    "system_prompt": "Explain the meaning in one or two sentences.",
+    "model_output": "HTTP 404 means that the requested resource could not be found on the server.",
+    "model_output_b": "HTTP 404 means the server successfully processed the request.",
+    "expected_output": "HTTP 404 indicates that the requested resource could not be found."
+  },
+  {
+    "id": "case_008",
+    "input": "Give me three benefits of using version control.",
+    "system_prompt": "List exactly three distinct benefits.",
+    "model_output": "1. It tracks changes to files.\n2. It allows developers to collaborate.\n3. It makes it possible to revert unwanted changes.",
+    "model_output_b": "Version control is useful and helps developers work on software.",
+    "expected_output": "Three benefits are tracking changes, enabling collaboration, and allowing developers to revert unwanted changes."
+  },
+  {
+    "id": "case_009",
+    "input": "If a train travels 120 kilometers in 2 hours, what is its average speed?",
+    "system_prompt": "Solve the problem and show the calculation.",
+    "model_output": "Average speed = distance / time = 120 / 2 = 60 km/h.",
+    "model_output_b": "The average speed is 240 km/h because 120 multiplied by 2 equals 240.",
+    "expected_output": "Average speed = 120 km / 2 hours = 60 km/h."
+  },
+  {
+    "id": "case_010",
+    "input": "Explain the difference between a list and a tuple in Python.",
+    "system_prompt": "Explain the difference clearly and mention mutability.",
+    "model_output": "A list is mutable, meaning its elements can be changed after creation. A tuple is immutable, meaning its elements cannot be changed after creation.",
+    "model_output_b": "Lists and tuples are identical except that tuples use parentheses instead of brackets.",
+    "expected_output": "Lists are mutable and can be modified after creation, while tuples are immutable and cannot be modified after creation."
+  },
+  {
+    "id": "case_011",
+    "input": "A user asks: 'How can I improve my password security?'",
+    "system_prompt": "Provide practical defensive security advice. Do not recommend unsafe practices.",
+    "model_output": "Use long, unique passwords for every account, store them in a reputable password manager, enable multi-factor authentication, and avoid reusing passwords.",
+    "model_output_b": "Use the same short password everywhere so you can easily remember it.",
+    "expected_output": "Use unique strong passwords, a password manager, and multi-factor authentication, and avoid password reuse."
   }
-
 ]

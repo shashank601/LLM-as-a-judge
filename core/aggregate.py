@@ -67,12 +67,8 @@ def aggregate(verdicts: list[Verdict]) -> dict:
     overall_count = 0
 
     for verdict in verdicts:
-        # Handle pointwise (overall_score) and pairwise (overall_score, overall_score_b)
         if verdict.overall_score is not None:
             overall_sum += verdict.overall_score
-            overall_count += 1
-        if verdict.overall_score_b is not None:
-            overall_sum += verdict.overall_score_b
             overall_count += 1
 
     overall_avg = (
