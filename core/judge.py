@@ -10,6 +10,7 @@ Supports:
 """
 
 import os
+from dotenv import load_dotenv
 
 from groq import Groq
 
@@ -17,6 +18,8 @@ from .schemas import TestCase, Verdict
 from .rubric import build_rubric_text
 from .parser import parse_verdict
 
+# Load environment variables from .env file
+load_dotenv()
 
 # Reads GROQ_API_KEY from the environment.
 client = Groq(
@@ -248,6 +251,7 @@ def judge_case(
     swap: bool = False,
     model: str = "openai/gpt-oss-20b",
     max_retries: int = 1,
+    log_file=None,
 ) -> Verdict | None:
     """
     Judge one test case.
@@ -260,6 +264,9 @@ def judge_case(
 
     swap=True:
         Reverses A/B positions for position-bias testing.
+
+    log_file:
+        Optional path to JSONL log file for recording judge invocations.
     """
 
     if mode == "pointwise":
@@ -288,10 +295,36 @@ def judge_case(
 
     for attempt in range(max_retries + 1):
 
-        raw_text, usage = call_judge(
-            prompt=prompt,
-            model=model,
-        )
+        try:
+            raw_text, usage = call_judge(
+                prompt=prompt,
+                model=model,
+            )
+
+            # Record the judge call immediately after receiving response
+            if log_file is not None:
+                from .logger import log_judge_call
+                log_judge_call(
+                    log_file=log_file,
+                    case_id=case.id,
+                    model=model,
+                    prompt=prompt,
+                    raw_response=raw_text,
+                    usage=usage,
+                )
+
+        except Exception as e:
+            # Record failure if logger is available
+            if log_file is not None:
+                from .logger import log_failure
+                log_failure(
+                    log_file=log_file,
+                    case_id=case.id,
+                    model=model,
+                    error=str(e),
+                    prompt=prompt,
+                )
+            raise
 
         verdict = parse_verdict(
             raw_text,
@@ -318,5 +351,16 @@ Return ONLY valid JSON matching the required schema.
 Do not use markdown.
 Do not add explanations outside the JSON.
 """
+
+    # All retries failed
+    if log_file is not None:
+        from .logger import log_failure
+        log_failure(
+            log_file=log_file,
+            case_id=case.id,
+            model=model,
+            error="All retries failed - could not parse response",
+            prompt=prompt,
+        )
 
     return None

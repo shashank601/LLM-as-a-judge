@@ -25,6 +25,7 @@ def evaluate_case(
     case: TestCase,
     mode: str = "pointwise",
     judge_model: str = "openai/gpt-oss-20b",
+    log_file=None,
 ) -> Verdict | None:
     """
     Evaluate a test case.
@@ -36,6 +37,9 @@ def evaluate_case(
 
     Pairwise:
         Not yet implemented.
+
+    log_file:
+        Optional path to JSONL log file for recording judge invocations.
     """
 
     if mode == "pointwise":
@@ -43,11 +47,15 @@ def evaluate_case(
             case=case,
             mode="pointwise",
             model=judge_model,
+            log_file=log_file,
         )
 
     elif mode == "pairwise":
-        raise ValueError(
-            "Pairwise evaluation is not yet implemented."
+        return judge_case(
+            case=case,
+            mode="pairwise",
+            model=judge_model,
+            log_file=log_file,
         )
 
     else:

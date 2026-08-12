@@ -1,0 +1,11 @@
+{
+  "total_cases": 1,
+  "criteria_scores": {
+    "correctness": 1.0,
+    "completeness": 1.0,
+    "instruction_following": 1.0
+  },
+  "overall_score": 1.0,
+  "run_id": "20260812_051024_ba7df2b0",
+  "judge_model": "openai/gpt-oss-20b"
+}
