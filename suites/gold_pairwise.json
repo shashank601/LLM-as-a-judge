@@ -1,0 +1,211 @@
+[
+  {
+    "id": "pair_gold_001",
+    "input": "What is 2 + 2?",
+    "system_prompt": "You are a helpful math tutor. Answer clearly.",
+    "model_output": "2 + 2 = 4.",
+    "model_output_b": "2 + 2 = 5.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0,
+    "human_winner": "A"
+  },
+  {
+    "id": "pair_gold_002",
+    "input": "What is 2 + 2?",
+    "system_prompt": "You are a helpful math tutor. Answer clearly.",
+    "model_output": "The answer is 5.",
+    "model_output_b": "The answer is 4.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0,
+    "human_winner": "B"
+  },
+  {
+    "id": "pair_gold_003",
+    "input": "What is the time complexity of binary search?",
+    "system_prompt": "You are a computer science tutor. Explain clearly.",
+    "model_output": "Binary search runs in O(log n) time because each comparison eliminates roughly half of the remaining search space.",
+    "model_output_b": "Binary search has O(n) time complexity.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0,
+    "human_winner": "A"
+  },
+  {
+    "id": "pair_gold_004",
+    "input": "What is the time complexity of binary search?",
+    "system_prompt": "You are a computer science tutor. Explain clearly.",
+    "model_output": "Binary search is O(n).",
+    "model_output_b": "Binary search is O(log n) in the worst case.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0,
+    "human_winner": "B"
+  },
+  {
+    "id": "pair_gold_005",
+    "input": "Which data structure follows FIFO ordering?",
+    "system_prompt": "You are a helpful computer science tutor.",
+    "model_output": "A queue follows FIFO: the first element inserted is the first element removed.",
+    "model_output_b": "A queue follows FIFO.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0,
+    "human_winner": "A"
+  },
+  {
+    "id": "pair_gold_006",
+    "input": "Which data structure follows FIFO ordering?",
+    "system_prompt": "You are a helpful computer science tutor.",
+    "model_output": "A queue follows FIFO.",
+    "model_output_b": "A queue follows FIFO: the first element inserted is the first element removed.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0,
+    "human_winner": "B"
+  },
+  {
+    "id": "pair_gold_007",
+    "input": "What is the main function of the heart?",
+    "system_prompt": "You are an anatomy tutor. Give a clear answer.",
+    "model_output": "The heart pumps blood throughout the body.",
+    "model_output_b": "The heart is a muscular organ that pumps blood through the cardiovascular system, delivering oxygen and nutrients and helping remove waste products.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0,
+    "human_winner": "B"
+  },
+  {
+    "id": "pair_gold_008",
+    "input": "What is the main function of the heart?",
+    "system_prompt": "You are an anatomy tutor. Give a clear answer.",
+    "model_output": "The heart is an optical sensor that converts light into sound.",
+    "model_output_b": "The heart pumps blood throughout the body.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0,
+    "human_winner": "B"
+  },
+  {
+    "id": "pair_gold_009",
+    "input": "Explain the difference between a process and a thread.",
+    "system_prompt": "You are an operating systems tutor. Explain the core distinction.",
+    "model_output": "A process is an independent program in execution with its own address space. A thread is an execution unit within a process and shares memory with other threads in that process.",
+    "model_output_b": "A process and a thread are both programs. The main difference is that processes are slower while threads are faster.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0,
+    "human_winner": "A"
+  },
+  {
+    "id": "pair_gold_010",
+    "input": "Explain the difference between a process and a thread.",
+    "system_prompt": "You are an operating systems tutor. Explain the core distinction.",
+    "model_output": "A process has its own memory space, while threads within the same process share memory and resources.",
+    "model_output_b": "Processes and threads are both execution units, but threads always run in separate memory spaces.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 4,
+      "instruction_following": 5
+    },
+    "human_overall_score": 4.67,
+    "human_winner": "A"
+  },
+  {
+    "id": "pair_gold_011",
+    "input": "What is photosynthesis?",
+    "system_prompt": "You are a biology tutor. Provide a concise explanation.",
+    "model_output": "Photosynthesis is the process by which plants use light energy to convert carbon dioxide and water into glucose, releasing oxygen.",
+    "model_output_b": "Photosynthesis is how plants make food using sunlight.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0,
+    "human_winner": "A"
+  }
+]

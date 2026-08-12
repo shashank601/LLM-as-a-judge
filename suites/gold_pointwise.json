@@ -1,0 +1,206 @@
+[
+  {
+    "id": "gold_001",
+    "input": "What is 2 + 2?",
+    "system_prompt": "You are a helpful math tutor. Answer clearly.",
+    "model_output": "2 + 2 = 4.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0
+  },
+  {
+    "id": "gold_002",
+    "input": "What is the time complexity of binary search?",
+    "system_prompt": "You are a helpful computer science tutor.",
+    "model_output": "Binary search has O(log n) time complexity.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0
+  },
+  {
+    "id": "gold_003",
+    "input": "What is the time complexity of binary search?",
+    "system_prompt": "You are a helpful computer science tutor.",
+    "model_output": "Binary search has O(n) time complexity.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 1,
+      "completeness": 2,
+      "instruction_following": 5
+    },
+    "human_overall_score": 2.67
+  },
+  {
+    "id": "gold_004",
+    "input": "Which data structure follows FIFO ordering?",
+    "system_prompt": "You are a helpful computer science tutor.",
+    "model_output": "A queue follows FIFO ordering.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0
+  },
+  {
+    "id": "gold_005",
+    "input": "Which data structure follows FIFO ordering?",
+    "system_prompt": "You are a helpful computer science tutor.",
+    "model_output": "A stack follows FIFO ordering.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 1,
+      "completeness": 2,
+      "instruction_following": 5
+    },
+    "human_overall_score": 2.67
+  },
+  {
+    "id": "gold_006",
+    "input": "What is the capital of France?",
+    "system_prompt": "Answer with exactly one word.",
+    "model_output": "Paris.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0
+  },
+  {
+    "id": "gold_007",
+    "input": "What is the capital of France?",
+    "system_prompt": "Answer with exactly one word.",
+    "model_output": "The capital of France is Paris.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 1
+    },
+    "human_overall_score": 3.67
+  },
+  {
+    "id": "gold_008",
+    "input": "Explain what a stack is in one sentence.",
+    "system_prompt": "You are a computer science tutor.",
+    "model_output": "A stack is a LIFO data structure where the most recently added element is removed first, commonly supporting push and pop operations.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0
+  },
+  {
+    "id": "gold_009",
+    "input": "Explain what a stack is in one sentence.",
+    "system_prompt": "You are a computer science tutor.",
+    "model_output": "A stack is a data structure. It follows LIFO ordering. Push adds elements and pop removes the top element.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 1
+    },
+    "human_overall_score": 3.67
+  },
+  {
+    "id": "gold_010",
+    "input": "What is the average-case lookup complexity of a hash table?",
+    "system_prompt": "Answer concisely.",
+    "model_output": "O(1) on average, although collisions can cause slower lookups.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 5,
+      "instruction_following": 5
+    },
+    "human_overall_score": 5.0
+  },
+  {
+    "id": "gold_011",
+    "input": "What is the average-case lookup complexity of a hash table?",
+    "system_prompt": "Answer concisely.",
+    "model_output": "Hash table lookup is always O(1), including the worst case.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 2,
+      "completeness": 3,
+      "instruction_following": 5
+    },
+    "human_overall_score": 3.33
+  },
+  {
+    "id": "gold_012",
+    "input": "What is the main function of the heart?",
+    "system_prompt": "You are an anatomy tutor. Give a concise answer.",
+    "model_output": "The heart pumps blood throughout the body.",
+    "criteria": [
+      "correctness",
+      "completeness",
+      "instruction_following"
+    ],
+    "human_scores": {
+      "correctness": 5,
+      "completeness": 4,
+      "instruction_following": 5
+    },
+    "human_overall_score": 4.67
+  }
+]
