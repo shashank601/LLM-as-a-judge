@@ -186,20 +186,20 @@ Do not include any text outside the JSON.
 
 Use exactly this shape:
 
-{
+{{
     "criteria": [
-        {
+        {{
             "name": "...",
             "a_score": 1,
             "b_score": 1,
             "rationale": "..."
-        }
+        }}
     ],
     "overall_score": 0.0,
     "overall_score_b": 0.0,
     "overall_rationale": "...",
     "winner": "A"
-}
+}}
 """.strip()
 
 

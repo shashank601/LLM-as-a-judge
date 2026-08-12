@@ -8,8 +8,17 @@ Responsible for:
 3. Returning Verdicts.
 """
 
+import json
+
 from .schemas import TestCase, Verdict
 from .judge import judge_case
+
+
+def load_suite(path: str) -> list[TestCase]:
+    """Load test cases from a JSON file."""
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    return [TestCase(**case) for case in data]
 
 
 def evaluate_case(

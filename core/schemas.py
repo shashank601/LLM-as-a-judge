@@ -12,6 +12,24 @@ class TestCase(BaseModel):
     criteria: Optional[list[str]] = None
 
 
+
+class GoldTestCase(BaseModel):
+    id: str
+
+    input: str
+    system_prompt: str
+
+    model_output: str
+    model_output_b: Optional[str] = None
+
+    criteria: list[str]
+
+    human_scores: Optional[dict[str, int]] = None
+    human_overall_score: Optional[float] = None
+
+    human_winner: Optional[Literal["A", "B", "tie"]] = None
+
+
 # ---------------------------------------------------------------------------
 # Pointwise
 # ---------------------------------------------------------------------------
