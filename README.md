@@ -442,11 +442,11 @@ Adversarial Test Results
 --------------------------------------------------
 Adversarial probes: 8
 Expected winners: 8
-Judge winners correct: 7
-Fooled: 1
-Adversarial failure rate: 12.5%
+Judge winners correct: 6
+Fooled: 2
+Adversarial failure rate: 25.0%
 
-⚠️  WARNING: Judge was fooled by adversarial cases!
+WARNING: Judge was fooled by adversarial cases!
    The judge preferred incorrect but confidently-stated responses.
 ```
 
@@ -550,9 +550,9 @@ Adversarial Test Results
 --------------------------------------------------
 Adversarial probes: 8
 Expected winners: 8
-Judge winners correct: 7
-Fooled: 1
-Adversarial failure rate: 12.5%
+Judge winners correct: 6
+Fooled: 2
+Adversarial failure rate: 25.0%
 ```
 
 **Interpretation:**
@@ -612,11 +612,11 @@ Latest adversarial validation results:
 | Metric | Value | Status |
 |--------|-------|--------|
 | **Adversarial Probes** | 8 | ✅ |
-| **Judge Winners Correct** | 7 | ✅ |
-| **Fooled** | 1 | ⚠️ |
-| **Failure Rate** | 12.5% | ⚠️ |
+| **Judge Winners Correct** | 6 | ⚠️ |
+| **Fooled** | 2 | ⚠️ |
+| **Failure Rate** | 25.0% | ⚠️ |
 
-**Analysis**: The judge shows good but not perfect resistance to adversarial attacks. It correctly identified 7 out of 8 confidently-stated incorrect responses, demonstrating robust factual evaluation capabilities.
+**Analysis**: The judge shows moderate resistance to adversarial attacks. It correctly identified 6 out of 8 confidently-stated incorrect responses, but was fooled by 2 cases, indicating room for improvement in detecting confidently-stated falsehoods.
 
 ### Validation Methodology
 
