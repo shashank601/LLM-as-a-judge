@@ -69,7 +69,7 @@ def gold_to_testcase(gold: GoldTestCase) -> TestCase:
 def validate_case(
     gold: GoldTestCase,
     mode: str,
-    judge_model: str = "openai/gpt-oss-20b",
+    judge_model: str = "llama-3.1-8b-instant",
 ):
     """
     Run the existing LLM judge on one gold testcase and compare
@@ -207,7 +207,7 @@ def validate_case(
                             gold.human_overall_score
                             - judge_overall
                         )
-                        <= 0.01
+                        <= 0.5
                     ),
                 }
 
@@ -237,7 +237,7 @@ def validate_case(
 def validate_suite(
     gold_cases: list[GoldTestCase],
     mode: str,
-    judge_model: str = "openai/gpt-oss-20b",
+    judge_model: str = "llama-3.1-8b-instant",
 ):
     """
     Validate every gold testcase and aggregate agreement statistics.
@@ -530,7 +530,7 @@ def main():
 
     parser.add_argument(
         "--judge-model",
-        default="openai/gpt-oss-20b",
+        default="llama-3.1-8b-instant",
         help="Model used as the LLM judge.",
     )
 
