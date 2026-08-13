@@ -170,6 +170,7 @@ python-dotenv>=1.0.0
 
 ## 🚀 Entry Points
 
+
 ### 1. **run.py** - Pointwise Evaluation
 
 Evaluate model outputs against predefined criteria.
@@ -177,6 +178,8 @@ Evaluate model outputs against predefined criteria.
 ```bash
 python run.py --suite suites/judge_suite.json --judge-model llama-3.1-8b-instant
 ```
+<img width="700"  alt="Screenshot 2026-08-12 120212" src="https://github.com/user-attachments/assets/5a54126e-d301-42b9-9306-3135b835ef1a" />
+
 
 **What it does:**
 - Loads test cases from JSON suite
@@ -199,10 +202,24 @@ python validate.py --suite suites/gold_pointwise.json --mode pointwise
 
 # Pairwise validation
 python validate.py --suite suites/gold_pairwise.json --mode pairwise
+```
+<table>
+    <tr>
+      <td><img width="800" alt="Screenshot 2026-08-12 115909" src="https://github.com/user-attachments/assets/f7223081-8a5e-49ec-bb64-b4bc38e5774f" /></td> 
+      <td><img width="800"  alt="Screenshot 2026-08-12 120851" src="https://github.com/user-attachments/assets/5047c8fc-af0c-4f3b-be4e-3d1e8d23175d" /></td>
+    </tr>
+</table>
 
+
+
+```bash
 # Adversarial validation (new!)
 python validate.py --suite suites/adversarial_suite.json --mode pairwise --adversarial
 ```
+
+<img width="700"  alt="Screenshot 2026-08-12 132642" src="https://github.com/user-attachments/assets/dd53d7c4-5c81-4d85-aaf2-a7a0cd45879b" />
+
+
 
 **What it does:**
 - Loads gold standard test cases with human labels
@@ -220,6 +237,8 @@ python validate.py --suite suites/adversarial_suite.json --mode pairwise --adver
 ### 3. **compare.py** - Pairwise Comparison
 
 Compare two model outputs with position bias detection.
+<img width="700"  alt="Screenshot 2026-08-12 115248" src="https://github.com/user-attachments/assets/c4f22739-f9ab-4825-8224-292df4d40551" />
+
 
 ```bash
 python compare.py --suite suites/judge_suite.json
@@ -704,23 +723,6 @@ We believe in transparency in AI-assisted development. All code has been:
 - Documented with clear explanations
 - Open-sourced for community scrutiny
 
----
-
-## 📸 Screenshots
-
-### Evaluation Run Output
-
-<!-- TODO: Add screenshot of run.py execution -->
-![Evaluation Run](docs/screenshots/evaluation_run.png)
-*Figure: Pointwise evaluation execution showing criteria scores and overall results*
-
-### Validation Report
-
-<!-- TODO: Add screenshot of validate.py execution -->
-![Validation Report](docs/screenshots/validation_report.png)
-*Figure: Judge validation report showing agreement statistics*
-
----
 
 ## 🎓 Assumptions & Design Decisions
 
@@ -748,42 +750,4 @@ We believe in transparency in AI-assisted development. All code has been:
 - **Comprehensive**: Logs prompts, responses, tokens, and intermediate states
 - **Timestamped**: Each run gets unique timestamped log files
 
----
 
-## 🚧 Future Enhancements
-
-### Planned Features
-
-- **Multi-Judge Consensus**: Run multiple judges and aggregate results
-- **Confidence Scoring**: Add confidence intervals to judge decisions
-- **Explainable AI**: Enhanced rationale generation and explanation
-- **Batch Processing**: Optimize for large-scale evaluation runs
-- **Real-time Monitoring**: Dashboard for ongoing evaluation metrics
-- **Custom Rubrics**: UI for creating and editing evaluation rubrics
-- **Model Comparison**: Built-in A/B testing framework for different models
-
-### Research Directions
-
-- **Bias Analysis**: Deeper investigation of position, length, and style biases
-- **Adversarial Robustness**: Enhanced adversarial test suites and mitigation
-- **Cross-Model Validation**: Testing judge consistency across different LLMs
-- **Human-in-the-Loop**: Interactive refinement of judge decisions
-- **Transfer Learning**: Adapting judges to specific domains
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📧 Contact
-
-For questions and support, please open an issue on GitHub.
-
----
-
-**Built with ❤️ for reliable LLM evaluation**
